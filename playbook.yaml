@@ -13,6 +13,8 @@
         state: restarted  
 
   tasks:
+
+  # Напиши плейбук в ansible, который установит и настроит nginx 
   - name: Update apt cache and install nginx
     apt:
       name: nginx
@@ -24,11 +26,12 @@
       src: "{{ root }}/{{ website_name }}"
       dest: /var/www/html/{{ website_name }}
 
+  # Плейбук должен при изменении конфига nginx подкладывать и давать команду на перечитку конфига
   - name: Update nginx config
     template:
       src: "{{ root }}/{{ config_name }}"
       dest: /etc/nginx/sites-available/default
-    notify: Restart nginx
+    notify: Restart nginx # Перечитка конфига (просто перезагрузка сервера) при замене файла (changed=true)
 
   - name: Enable new site
     file:
