@@ -1,14 +1,37 @@
 - name: Run nginx
-  hosts: all
+  hosts: machines
+  become: yes
+  vars:
+    root: website
+    config_name: nginx.conf.j2
+    website_name: sber.html
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted  
+
   tasks:
   - name: Update apt cache and install nginx
-    become: yes
     apt:
       name: nginx
       state: latest
-      update_cache: true
-  - name: Start nginx
-    become: yes
-    service:
-      name: nginx
-      state: started
+      update_cache: yes
+
+  - name: Copy new website to server
+    copy:
+      src: "{{ root }}/{{ website_name }}"
+      dest: /var/www/html/{{ website_name }}
+
+  - name: Update nginx config
+    template:
+      src: "{{ root }}/{{ config_name }}"
+      dest: /etc/nginx/sites-available/default
+    notify: Restart nginx
+
+  - name: Enable new site
+    file:
+      src: /etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-enabled/default
+      state: link
