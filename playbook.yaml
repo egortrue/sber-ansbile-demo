@@ -4,22 +4,29 @@
   vars:
     root: website
     config_name: nginx.conf.j2
-    website_name: sber.html
+    website_name: sber.php
 
   handlers:
     - name: Restart nginx
       service:
         name: nginx
-        state: restarted  
+        state: restarted
 
   tasks:
 
   # Напиши плейбук в ansible, который установит и настроит nginx 
-  - name: Update apt cache and install nginx
+  - name: Install nginx and php
     apt:
-      name: nginx
+      name:
+        - nginx
+        - php8.1-fpm
       state: latest
       update_cache: yes
+
+  - name: Start php service
+    service:
+      name: php8.1-fpm
+      state: started
 
   - name: Copy new website to server
     copy:
