@@ -1,0 +1,14 @@
+- name: Run nginx
+  hosts: all
+  tasks:
+  - name: Update apt cache and install nginx
+    become: yes
+    apt:
+      name: nginx
+      state: latest
+      update_cache: true
+  - name: Start nginx
+    become: yes
+    service:
+      name: nginx
+      state: started
