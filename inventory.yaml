@@ -1,6 +1,5 @@
 machines:
   hosts:
-    ubuntu-sber-client:
-      ansible_host: 192.168.64.4
+    client:
+      ansible_host: 10.128.0.4
       ansible_user: user
-      ansible_become_password: user
