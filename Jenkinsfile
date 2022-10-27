@@ -10,7 +10,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook playbook.yaml -i inventory.yaml' // Запустим плейбук
+                withCredentials([sshUserPrivateKey(credentialsId: 'private_ssh_key', keyFileVariable: 'PRIVATE')]) {
+                    sh 'ansible-playbook playbook.yaml -i inventory.yaml --private-key $PRIVATE' // Запустим плейбук
+                }
             }
         }
     }
