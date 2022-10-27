@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <h1>Hello, Sber from main!</h1>
+    <h1>Hello, Sber from dev!</h1>
     <?php 
         echo str_repeat("<p>If you see this page, Egor Trukhin successfully completed the task :)</p>", 10);
     ?>
