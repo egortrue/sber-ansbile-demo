@@ -15,7 +15,7 @@
 <body>
     <h1>Hello, Sber!</h1>
     <?php 
-        echo str_repeat("<p>If you see this page, Egor Trukhin successfully completed the task :)</p>", 5);
+        echo str_repeat("<p>If you see this page, Egor Trukhin successfully completed the task :)</p>", 10);
     ?>
     <?php phpinfo(); ?>
 </body>
